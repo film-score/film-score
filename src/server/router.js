@@ -1,5 +1,6 @@
 const express = require('express')
 const mw = require('./middleware.js')
+const db = require('../db')
 
 class FilmscoreRouter {
     constructor(app) {
@@ -13,8 +14,8 @@ class FilmscoreRouter {
     scoresRouter() {
         let scoresRouter = express.Router()
         scoresRouter.get('/:id', mw.GET_query({ table: 'scores', by: 'id' }), (req, res) => { mw.GET_return(req, res) })
-        scoresRouter.post('/', (req, res) => { })
-        scoresRouter.delete('/:id', (req, res) => { })
+        scoresRouter.post('/', (req, res, next) => { mw.POST_query({ table: 'scores' }, req, res, next) }, (req, res) => { mw.POST_return(req, res) })
+        scoresRouter.delete('/:id', mw.DELETE_query({ table: 'scores' }), (req, res) => { mw.DELETE_return(req, res) })
         this.app.use('/scores', scoresRouter)
     }
     
@@ -29,8 +30,9 @@ class FilmscoreRouter {
         let usersRouter = express.Router()
         usersRouter.get('/:id', mw.GET_query({ table: 'users' }), (req, res) => { mw.GET_return(req, res) })
         usersRouter.get('/:id/scores', mw.GET_query({ table: 'scores', by: 'user_id' }), (req, res) => { mw.GET_return(req, res) })
-        usersRouter.post('/', (req, res) => { })
-        usersRouter.delete('/:id', (req, res) => { })
+        usersRouter.post('/', (req, res, next) => { mw.POST_query({ table: 'users' }, req, res, next) }, (req, res) => { mw.POST_return(req, res) })
+        // usersRouter.post('/auth', mw.POST_query(), (req, res) => { })
+        usersRouter.delete('/:id', mw.DELETE_query({ table: 'users' }), (req, res) => { mw.DELETE_return(req, res) })
         this.app.use('/users', usersRouter)
     }
 }

@@ -1,8 +1,11 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const path = require('path')
 const router = require('./router')
 
 const app = express()
+app.use(bodyParser.json({ type: 'application/json' }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(express.static(path.join(__dirname, 'build')))
 

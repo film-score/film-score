@@ -1,6 +1,11 @@
 const db = require('../db')
 let moduleExports = module.exports = {}
 
+/*
+ * GET middleware
+ */
+
+// GET Query - set up SQL query based on options
 moduleExports.GET_query = options => {
     let sql
 
@@ -16,10 +21,15 @@ moduleExports.GET_query = options => {
             sql = `SELECT id, first_name, last_name, email, account_type FROM users WHERE id=$1`
             break;
         default:
-            return err('Required param: table')
+            return console.error('Required param: table')
             break;
     }
 
+    return GET_db(sql)
+}
+
+// GET DB - Query DB based on SQL query by resource id.
+function GET_db(sql) {
     return (req, res, next) => {
         db.query(sql, [req.params.id], (err, results) => {
             if (err) {
@@ -40,5 +50,112 @@ moduleExports.GET_query = options => {
 }
 
 moduleExports.GET_return = (req, res) => {
+    res.json(req.results)
+}
+
+/*
+ * POST middleware
+ */
+
+// POST Query - Set up SQL query and data for POST requests 
+moduleExports.POST_query = (options, req, res, next) => {
+    let sql, data
+
+    switch (options.table) {
+        case 'users':
+            sql = `INSERT INTO users (id, email, password, date_registered, first_name, last_name, account_type)
+                    VALUES (DEFAULT, $1, $2, $3, $4, $5, $6) RETURNING id`
+            data = [
+                req.body.email,
+                req.body.password,
+                new Date(),
+                req.body.first_name,
+                req.body.last_name,
+                'user',
+            ]       
+            break;
+        case 'scores':
+            sql = `INSERT INTO scores (id, score_date, film_id, user_id, composite_score, story_score, performance_score, visuals_score, audio_score, construction_score)
+                    VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`
+            data = [
+                new Date(),
+                req.body.film_id,
+                req.body.user_id,
+                req.body.composite_score,
+                req.body.story_score,
+                req.body.performance_score,
+                req.body.visuals_score,
+                req.body.audio_score,
+                req.body.construction_score,
+            ]
+            break;
+        default:
+            return console.error('Required param: table')
+            break;
+    }
+
+    POST_db(sql, data, req, res, next)
+}
+
+// POST DB - Query DB to post based on passed SQL query and data
+moduleExports.POST_return = (req, res) => {
+    res.json(req.results)
+}
+
+// POST DB - Query DB to post based on passed SQL query and data
+function POST_db(sql, data, req, res, next) {
+    db.query(sql, data, (err, results) => {
+        if (err) {
+            console.error(err)
+            res.statusCode = 500
+            return res.json({ message: 'Game over, man! Game OVER! Couldn\'t add resource.', errors: err })
+        }
+
+        req.results = results.rows
+        next()
+    })
+}
+
+
+/*
+ * DELETE middleware
+ */
+
+// DELETE Query - set up SQL query based on options
+moduleExports.DELETE_query = options => {
+    let sql
+
+    switch (options.table) {
+        case 'scores':
+            sql = `DELETE FROM scores WHERE id=$1`
+            break;
+        case 'users':
+            sql = `DELETE FROM users WHERE id=$1`
+            break;
+        default:
+            return console.error('Required param: table')
+            break;
+    }
+
+    return DELETE_db(sql)
+}
+
+// DELETE DB - Query DB based on SQL query by resource id.
+function DELETE_db(sql) {
+    return (req, res, next) => {
+        db.query(sql, [req.params.id], (err, results) => {
+            if (err) {
+                console.error(err)
+                res.statusCode = 500
+                return res.json({ message: 'Game over, man! Game OVER! Something went wrong.', errors: err })
+            }
+
+            req.results = results
+            next()
+        })
+    }
+}
+
+moduleExports.DELETE_return = (req, res) => {
     res.json(req.results)
 }
