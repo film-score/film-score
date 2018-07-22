@@ -12,10 +12,11 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar, faList } from '@fortawesome/free-solid-svg-icons'
+import { faStar, faList, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faStar)
 library.add(faList)
+library.add(faTrash)
 
 const userIsAuthenticated = () => {
   return localStorage.getItem('jwt') ? true : false
@@ -31,45 +32,51 @@ class Home extends Component {
     }
   }
 
-  componentDidMount() {
-    fetch('http://localhost:8080/users', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`
-      }
-    })
-      .catch((error) => {
-        console.error(error)
-      })
-      .then((resp) => resp.json())
-      .then((data) => {
-        fetch(`http://localhost:8080/users/${data.id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('jwt')}`
-          }
+  componentDidMount = () => {
+    if (userIsAuthenticated()) {
+      fetch('http://localhost:8080/users', {
+        credentials: 'include',
+        headers: new Headers({
+          'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+          'Content-Type': 'application/json'
         })
-          .catch((error) => {
-            console.error(error)
-          })
-          .then((resp) => resp.json())
-          .then((data) => {
-            data = data[0]
-
-            this.setState({
-              userLoaded: true,
-              currentUser: {
-                id: data.id,
-                first_name: data.first_name,
-                last_name: data.last_name,
-                email: data.email,
-                account_type: data.account_type,
-              }
-            })
-          })
       })
+        .catch((error) => {
+          console.error(error)
+        })
+        .then((resp) => resp.json())
+        .then((data) => {
+          fetch(`http://localhost:8080/users/${data.id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('jwt')}`
+            }
+          })
+            .catch((error) => {
+              console.error(error)
+            })
+            .then((resp) => resp.json())
+            .then((data) => {
+              data = data[0]
+
+              this.setState({
+                userLoaded: true,
+                currentUser: {
+                  id: data.id,
+                  first_name: data.first_name,
+                  last_name: data.last_name,
+                  email: data.email,
+                  account_type: data.account_type,
+                }
+              })
+            })
+        })
+    }
   }
 
   render() {
-    if(userIsAuthenticated()) {
+    if(!userIsAuthenticated()) {
+      return <Redirect to='/login' noThrow />
+    } else {
       if (!this.state.userLoaded) {
         return <div id="loading"><img src='./logo.svg' /></div>
       }
@@ -82,8 +89,6 @@ class Home extends Component {
           </Router>
         <Footer />
       </main>
-    } else {
-      return <Redirect to='/login' noThrow />
     }
   }
 }

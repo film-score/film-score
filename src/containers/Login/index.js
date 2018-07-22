@@ -18,7 +18,7 @@ class LoginForm extends React.Component {
         this.state = { messages: null, loggedIn: props.loggedIn}
     }
 
-    handleFormSubmit(e) {
+    handleFormSubmit = (e) => {
         e.preventDefault()
 
         this.setState({...this.state, messages: null})
@@ -27,7 +27,7 @@ class LoginForm extends React.Component {
         const fields = new FormData(e.target)
         let email = fields.get('email')
         let password = fields.get('password')
-//1234
+
         fetch('http://localhost:8080/users/auth', {
             method: 'POST',
             credentials: 'include',
