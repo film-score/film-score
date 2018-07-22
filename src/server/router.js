@@ -1,6 +1,6 @@
 const express = require('express')
 const mw = require('./middleware.js')
-const db = require('../db')
+const passport = require('passport')
 
 class FilmscoreRouter {
     constructor(app) {
@@ -13,26 +13,41 @@ class FilmscoreRouter {
 
     scoresRouter() {
         let scoresRouter = express.Router()
-        scoresRouter.get('/:id', mw.GET_query({ table: 'scores', by: 'id' }), (req, res) => { mw.GET_return(req, res) })
-        scoresRouter.post('/', (req, res, next) => { mw.POST_query({ table: 'scores' }, req, res, next) }, (req, res) => { mw.POST_return(req, res) })
-        scoresRouter.delete('/:id', mw.DELETE_query({ table: 'scores' }), (req, res) => { mw.DELETE_return(req, res) })
+        scoresRouter.get('/:id', (req, res, next) => mw.GET_query({ table: 'scores', by: 'id' }, req, res, next), (req, res) => { mw.GET_return(req, res) })
+        scoresRouter.post('/', passport.authenticate('jwt', { session: false }), (req, res, next) => { mw.POST_query({ table: 'scores' }, req, res, next) }, (req, res) => { mw.POST_return(req, res) })
+        scoresRouter.delete('/:id', passport.authenticate('jwt', { session: false }), mw.DELETE_query({ table: 'scores' }), (req, res) => { mw.DELETE_return(req, res) })
         this.app.use('/scores', scoresRouter)
     }
     
     filmsRouter() {
         let filmsRouter = express.Router()
-        filmsRouter.get('/:id', mw.GET_query({ table: 'films' }), (req, res) => { mw.GET_return(req, res) })
-        filmsRouter.get('/:id/scores', mw.GET_query({ table: 'scores', by: 'film_id' }), (req, res) => { mw.GET_return(req, res) })
+        filmsRouter.get('/:id', (req, res, next) => {mw.GET_query({ table: 'films' }, req, res, next)}, (req, res) => { mw.GET_return(req, res) })
+        filmsRouter.get('/', (req, res, next) => {mw.GET_query({ table: 'films', by: 'query' }, req, res, next)}, (req, res) => { mw.GET_return(req, res) })
+        filmsRouter.get('/:id/scores', (req, res, next) => mw.GET_query({ table: 'scores', by: 'film_id' }, req, res, next), (req, res) => { mw.GET_return(req, res) })
         this.app.use('/films', filmsRouter)
     }
 
     usersRouter() {
         let usersRouter = express.Router()
-        usersRouter.get('/:id', mw.GET_query({ table: 'users' }), (req, res) => { mw.GET_return(req, res) })
-        usersRouter.get('/:id/scores', mw.GET_query({ table: 'scores', by: 'user_id' }), (req, res) => { mw.GET_return(req, res) })
+        
+        usersRouter.get('/', passport.authenticate('jwt', { session: false }),
+            (req, res) => {
+                res.json(req.user)
+            }
+        )
+
+        usersRouter.get('/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => mw.GET_query({ table: 'users' }, req, res, next), (req, res) => { mw.GET_return(req, res) })
+        usersRouter.get('/:id/scores', (req, res, next) => mw.GET_query({ table: 'scores', by: 'user_id' }, req, res, next), (req, res) => { mw.GET_return(req, res) })
         usersRouter.post('/', (req, res, next) => { mw.POST_query({ table: 'users' }, req, res, next) }, (req, res) => { mw.POST_return(req, res) })
-        // usersRouter.post('/auth', mw.POST_query(), (req, res) => { })
-        usersRouter.delete('/:id', mw.DELETE_query({ table: 'users' }), (req, res) => { mw.DELETE_return(req, res) })
+
+        usersRouter.post('/auth', passport.authenticate('local'), (req, res) => {
+            const { user } = req
+            res.status(user.status_code)
+            res.cookie('jwt', user.token)
+            res.json(user)
+        })
+
+        usersRouter.delete('/:id', passport.authenticate('jwt', { session: false }), mw.DELETE_query({ table: 'users' }), (req, res) => { mw.DELETE_return(req, res) })
         this.app.use('/users', usersRouter)
     }
 }

@@ -6,32 +6,39 @@ let moduleExports = module.exports = {}
  */
 
 // GET Query - set up SQL query based on options
-moduleExports.GET_query = options => {
+moduleExports.GET_query = (options, req, res, next) => {
     let sql
 
     switch (options.table) {
         case 'scores':
             if (!options.by) { return console.err('What are we querying by, dude?') }
+            if (options.by === 'user_id') {
+                sql = `SELECT * FROM ( SELECT *, ( SELECT array_to_json(array_agg(row_to_json(f))) FROM ( SELECT * FROM films WHERE id=scores.film_id ) f ) AS film_info FROM scores WHERE user_id=$1 ) s`;
+                break
+            }
             sql = `SELECT * FROM scores WHERE ${options.by}=$1`
-            break;
+            break
         case 'films':
+            if (options.by === 'query') {
+                sql = `SELECT DISTINCT * FROM films WHERE title ILIKE concat('%', $1::varchar, '%');`
+                return GET_db(sql, [req.query.q], req, res, next)
+            }
             sql = `SELECT * FROM films WHERE id=$1`
-            break;
+            break
         case 'users':
             sql = `SELECT id, first_name, last_name, email, account_type FROM users WHERE id=$1`
-            break;
+            break
         default:
             return console.error('Required param: table')
-            break;
     }
 
-    return GET_db(sql)
+    return GET_db(sql, [req.params.id], req, res, next)
 }
 
 // GET DB - Query DB based on SQL query by resource id.
-function GET_db(sql) {
-    return (req, res, next) => {
-        db.query(sql, [req.params.id], (err, results) => {
+function GET_db(sql, data, req, res, next) {
+    // return (req, res, next) => {
+        db.query(sql, data, (err, results) => {
             if (err) {
                 console.error(err)
                 res.statusCode = 500
@@ -46,7 +53,7 @@ function GET_db(sql) {
             req.results = results.rows
             next()
         })
-    }
+    // }
 }
 
 moduleExports.GET_return = (req, res) => {
@@ -76,7 +83,7 @@ moduleExports.POST_query = (options, req, res, next) => {
             break;
         case 'scores':
             sql = `INSERT INTO scores (id, score_date, film_id, user_id, composite_score, story_score, performance_score, visuals_score, audio_score, construction_score)
-                    VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`
+                    VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`
             data = [
                 new Date(),
                 req.body.film_id,
