@@ -17,6 +17,27 @@ class UserDashboard extends React.Component {
         } 
     }
 
+    handleDelete = (id, row, e) => {
+        if (window.confirm('Are you sure you want to delete this score?')) {
+            fetch(`http://localhost:8080/scores/${id}`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+                    'Content-Type': 'application/json'
+                }),
+            })
+                .catch((err) => alert(err))
+                .then(() => {
+                    let scores = [...this.state.scores]
+                    scores.splice(row, 1)
+                    this.setState({ scores: scores })
+                })
+        } else {
+            return null
+        }
+    }
+
     componentDidMount() {
         fetch(`http://localhost:8080/users/${this.props.currentUser.id}/scores`)
         .then(data => data.json())
@@ -31,7 +52,7 @@ class UserDashboard extends React.Component {
                 {!this.state.noScores ?
                 <Container className="pb-5">
                     <Jumbotron currentUser={{ ...this.props.currentUser, filmsScored: this.state.scores.length }} />
-                     <Table rows={this.state.scores}/>
+                     <Table rows={this.state.scores} handleDelete={this.handleDelete}/>
                 </Container>
                 :
                 <Onboarding user={this.props.currentUser} />}
