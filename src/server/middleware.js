@@ -87,7 +87,7 @@ moduleExports.POST_query = (options, req, res, next) => {
             data = [
                 new Date(),
                 req.body.film_id,
-                req.body.user_id,
+                req.user.id,
                 req.body.composite_score,
                 req.body.story_score,
                 req.body.performance_score,
