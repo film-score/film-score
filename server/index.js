@@ -5,7 +5,7 @@ const cors = require('cors')
 const router = require('./router')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const db = require('../db')
+const db = require('./db')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
