@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Modal, ModalBody, ModalFooter, Table } from 'reactstrap'
-import { Redirect } from '../../../node_modules/@reach/router';
-import { Link } from '@reach/router'
+import { Redirect, Link } from '@reach/router';
 
 export class componentName extends Component {
     constructor(props) {

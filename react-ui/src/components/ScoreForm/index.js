@@ -54,7 +54,7 @@ export class ScoreForm extends Component {
 
         this.setState({ submittingForm: true })
 
-        fetch('http://localhost:8080/scores', {
+        fetch('/scores', {
             method: 'POST',
             credentials: 'include',
             headers: new Headers({
