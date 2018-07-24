@@ -91,7 +91,7 @@ app.use((req, res, next) => {
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(express.static(path.join(__dirname, '/client/build')))
+app.use(express.static(path.join(__dirname, '../react-ui/build')))
 
 router.router(app)
 
