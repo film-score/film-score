@@ -9,8 +9,8 @@ const db = require('./db')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const JWTStrategy = require('passport-JWT').Strategy
-const ExtractJWT = require('passport-JWT').ExtractJwt
+const JWTStrategy = require('passport-jwt').Strategy
+const ExtractJWT = require('passport-jwt').ExtractJwt
 
 /*
  * TODO: This is working and is a disaster. Got to get the genSalt going on user registration so the compare func will work.
