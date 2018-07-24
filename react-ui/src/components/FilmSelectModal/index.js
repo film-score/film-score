@@ -23,7 +23,7 @@ export class FilmSelectModal extends Component {
 
         if (input.length > 2) {
             setTimeout(() => {
-                fetch(`/films?q=${input}`)
+                fetch(`/api/films?q=${input}`)
                     .then(data => data.json())
                     .then(data => { this.setState({ suggestions: data }) })
             }, 1000)
@@ -34,7 +34,7 @@ export class FilmSelectModal extends Component {
         e.preventDefault()
         document.getElementById('filmTitle').value = (e.target.innerText)
         this.setState({ suggestions: [] })
-        fetch(`/films/${e.target.dataset.id}`)
+        fetch(`/api/films/${e.target.dataset.id}`)
         .then(data => data.json())
         .then(data => this.setState({
                 isFilmSelected: true,

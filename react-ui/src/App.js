@@ -34,7 +34,7 @@ class Home extends Component {
 
   componentDidMount = () => {
     if (userIsAuthenticated()) {
-      fetch('/users', {
+      fetch('/api/users', {
         credentials: 'include',
         headers: new Headers({
           'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
@@ -46,7 +46,7 @@ class Home extends Component {
         })
         .then((resp) => resp.json())
         .then((data) => {
-          fetch(`/users/${data.id}`, {
+          fetch(`/api/users/${data.id}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }

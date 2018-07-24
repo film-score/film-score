@@ -54,7 +54,7 @@ export class ScoreForm extends Component {
 
         this.setState({ submittingForm: true })
 
-        fetch('/scores', {
+        fetch('/api/scores', {
             method: 'POST',
             credentials: 'include',
             headers: new Headers({
