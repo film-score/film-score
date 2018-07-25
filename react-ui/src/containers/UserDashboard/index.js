@@ -19,7 +19,7 @@ class UserDashboard extends React.Component {
 
     handleDelete = (id, row, e) => {
         if (window.confirm('Are you sure you want to delete this score?')) {
-            fetch(`http://localhost:8080/scores/${id}`, {
+            fetch(`/api/scores/${id}`, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: new Headers({
@@ -39,7 +39,8 @@ class UserDashboard extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:8080/users/${this.props.currentUser.id}/scores`)
+        fetch(`/api/users/${this.props.currentUser.id}/scores`)
+        .catch(err => console.error(err))
         .then(data => data.json())
         .then(data => data.length ? this.setState({ scores: data, ready: true }) : this.setState({ noScores: true, ready: true }))
     }

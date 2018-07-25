@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
         let email = fields.get('email')
         let password = fields.get('password')
 
-        fetch('http://localhost:8080/users/auth', {
+        fetch('/api/users/auth', {
             method: 'POST',
             credentials: 'include',
             headers: {

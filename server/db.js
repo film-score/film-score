@@ -1,12 +1,9 @@
-dbConfig = {
-    host: 'localhost',
-    port: 5432,
-    database: 'filmscore',
-}
+const { Pool } = require("pg")
 
-const pg = require("pg")
-
-const pool = new pg.Pool(dbConfig)
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+})
 
 pool.on('error', (err) => {
     console.log('Idle client error ', err.message, err.stack)

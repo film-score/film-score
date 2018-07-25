@@ -1,16 +1,16 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-// const path = require('path')
+const path = require('path')
 const cors = require('cors')
 const router = require('./router')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const db = require('../db')
+const db = require('./db')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const JWTStrategy = require('passport-JWT').Strategy
-const ExtractJWT = require('passport-JWT').ExtractJwt
+const JWTStrategy = require('passport-jwt').Strategy
+const ExtractJWT = require('passport-jwt').ExtractJwt
 
 /*
  * TODO: This is working and is a disaster. Got to get the genSalt going on user registration so the compare func will work.
@@ -91,13 +91,9 @@ app.use((req, res, next) => {
 app.use(passport.initialize())
 app.use(passport.session())
 
-// app.use(express.static(path.join(__dirname, '../../public')))
+app.use(express.static(path.join(__dirname, '../react-ui/build')))
 
 router.router(app)
-
-// app.get('/', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../../public', 'index.html'))
-// })
 
 app.listen(process.env.PORT || 8080, () => {
     console.log('Film Score API listening on port 8080')
