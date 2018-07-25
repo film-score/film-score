@@ -40,6 +40,7 @@ class UserDashboard extends React.Component {
 
     componentDidMount() {
         fetch(`/api/users/${this.props.currentUser.id}/scores`)
+        .catch(err => console.error(err))
         .then(data => data.json())
         .then(data => data.length ? this.setState({ scores: data, ready: true }) : this.setState({ noScores: true, ready: true }))
     }
