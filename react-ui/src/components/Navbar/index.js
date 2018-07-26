@@ -36,6 +36,7 @@ const Navigation = (props) => {
                 <Nav navbar className="mr-auto">
                     <NavLink to="/" icon="list" label="Dashboard" />
                     <NavLink to="/new-score" icon="star" label="New Score" />
+                    {props.currentUser.account_type === 'admin' ? <NavLink to="/admin" icon="cogs" label="Admin" /> : null}
                 </Nav>
                 
             <div className="navbar-text">{props.currentUser.first_name + " " + props.currentUser.last_name}</div>

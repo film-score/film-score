@@ -6,17 +6,19 @@ import Footer from './components/Footer/index'
 import UserDashboard from './containers/UserDashboard'
 import NewScore from './containers/NewScore'
 import Login from './containers/Login'
+import Admin from './containers/Admin'
 
 import './app.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar, faList, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faStar, faList, faTrash, faCogs } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faStar)
 library.add(faList)
 library.add(faTrash)
+library.add(faCogs)
 
 const userIsAuthenticated = () => {
   return localStorage.getItem('jwt') ? true : false
@@ -37,7 +39,7 @@ class Home extends Component {
       fetch('/api/users', {
         credentials: 'include',
         headers: new Headers({
-          'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
           'Content-Type': 'application/json'
         })
       })
@@ -47,9 +49,11 @@ class Home extends Component {
         .then((resp) => resp.json())
         .then((data) => {
           fetch(`/api/users/${data.id}`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
+            credentials: 'include',
+            headers: new Headers({
+              Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+              'Content-Type': 'application/json'
+            })
           })
             .catch((error) => {
               console.error(error)
@@ -86,6 +90,7 @@ class Home extends Component {
           <Router>
             <UserDashboard path='/' currentUser={this.state.currentUser} />
             <NewScore path='/new-score' />
+            <Admin path='/admin' />
           </Router>
         <Footer />
       </main>
