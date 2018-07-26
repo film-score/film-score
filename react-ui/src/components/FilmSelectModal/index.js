@@ -39,7 +39,7 @@ export class FilmSelectModal extends Component {
                 <ModalBody>
                     
                     <div className="form-group mb-0">
-                        <input type="text" name="name" id="filmTitle" className="form-control border-dark" onChange={this.handleSearchInput} placeholder="Film Title" autocomplete="off" />
+                        <input type="text" name="name" id="filmTitle" className="form-control border-dark" onChange={this.handleSearchInput} placeholder="Search by film title..." autocomplete="off" />
                         <div id="film-suggestions">
                             {this.suggestionsList()}
                         </div>
