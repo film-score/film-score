@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Modal, ModalBody, ModalFooter, Table } from 'reactstrap'
 import { Redirect, Link } from '@reach/router';
 
-export class componentName extends Component {
+export class ScoreResultsModal extends Component {
     constructor(props) {
       super(props)
     
@@ -33,7 +33,8 @@ export class componentName extends Component {
                     </Table>
                 </ModalBody>
                 <ModalFooter className="border-dark">
-                    <Link className="btn btn-outline-light" to="/new-score">Score Another Film</Link>
+                    <button className="btn btn-outline-light" onClick={this.props.newScore}>Score Another Film</button>
+                    {/* <Link className="btn btn-outline-light" to="/new-score">Score Another Film</Link> */}
                     <Link className="btn btn-info" to="/">I'm Done</Link>
                 </ModalFooter>
         </Modal> : <Redirect to={this.state.redirect} noThrow />
@@ -41,4 +42,4 @@ export class componentName extends Component {
   }
 }
 
-export default componentName
+export default ScoreResultsModal
