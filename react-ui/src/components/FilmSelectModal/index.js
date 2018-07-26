@@ -60,10 +60,14 @@ export class FilmSelectModal extends Component {
         }
     }
 
+    preventEnter = (e) => {
+        return e.which === 13 ? e.preventDefault() : null
+    }
+
   render() {
     return (
         <Modal isOpen={this.props.modalState} toggle={this.props.modalToggle} backdrop="static" contentClassName="bg-dark text-light" className="modal-dialog-centered" id="newScoreModal" tabindex="-1" role="dialog" aria-labelledby="newScoreModalTitle" aria-hidden="true">
-            <form className="form" onSubmit={this.props.setFilm.bind(this.event, this.state.film)}>
+            <form className="form" onSubmit={this.props.setFilm.bind(this.event, this.state.film)} onKeyPress={this.preventEnter.bind(this)}>
                 <ModalBody>
                     
                     <div className="form-group mb-0">
