@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container } from 'reactstrap'
 import Jumbotron from '../../components/DashboardJumbotron'
-import Table from '../../components/DashboardTable'
 import Onboarding from '../../components/Onboarding'
+import { ScoreTable } from '../../components/ScoreTable'
 
 class UserDashboard extends React.Component {
     constructor(props) {
@@ -53,7 +53,7 @@ class UserDashboard extends React.Component {
                 {!this.state.noScores ?
                 <Container className="pb-5">
                     <Jumbotron currentUser={{ ...this.props.currentUser, filmsScored: this.state.scores.length }} />
-                     <Table rows={this.state.scores} handleDelete={this.handleDelete}/>
+                    <ScoreTable type='users' id={this.props.currentUser.id} />
                 </Container>
                 :
                 <Onboarding user={this.props.currentUser} />}
