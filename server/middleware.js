@@ -47,7 +47,7 @@ function GET_db(sql, data, req, res, next) {
 
             if (results.rows.length === 0) {
                 res.statusCode = 404
-                return res.json({ message: 'There\'s nothing for me here now. No results.', errors: err })
+                return res.json({ message: 'Well, I don’t think there is any question about it. It can only be attributable to human error. This sort of thing has cropped up before, and it has always been due to human error. No results.', errors: err })
             }
 
             req.results = results.rows
