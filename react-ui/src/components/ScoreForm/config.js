@@ -1,21 +1,3 @@
-/*
- * This file acts as the primary data layer of the web form.
- *
- *		SCALE DEGREES OF PHI FOR REFERENCE:
- *		46.9708196
- *		29.0301728
- *		17.9420104
- *		11.0890052
- *		6.85352607
- *		4.23580103
- *		2.617924
- *		1.618
- *		1
- *
- */
-
-// Primary data layer. Array of objects, each with subcategory array of objects
-
 const fields = [
     {
         title: "Story",
@@ -23,7 +5,7 @@ const fields = [
         subcategories: [
             {
                 title: "Pacing",
-                description: "How well does the story flow, including during scenes, between scenes, and between acts?",
+                description: "How well does the story hold your interest and make you wonder what comes next?",
                 scale: 46.9708196
             },
             {
@@ -33,37 +15,37 @@ const fields = [
             },
             {
                 title: "Tonal Consistency",
-                description: "How well does the film clearly convey its tone and maintain it throughout the film?",
+                description: "How well does the film convey and maintain its mood?",
                 scale: 17.9420104
             },
             {
                 title: "Dimension",
-                description: "How well does the film use subtext, symbolism, and metaphor to give the story a deeper meaning?",
+                description: "Does the film have a deeper meaning, and how well is it conveyed?",
                 scale: 11.0890052
             },
             {
                 title: "Breadth of Conflict",
-                description: "How well does the story’s driving conflict match the scope of the story in terms of its stakes?",
+                description: "How much does the main conflict affect the characters involved?",
                 scale: 6.85352607
             },
             {
                 title: "Resolution Appropriateness",
-                description: "How well does the story’s resolution wrap up the conflict in a believable way?",
+                description: "How well-done or believable is the end of the story?",
                 scale: 4.23580103
             },
             {
                 title: "Logic",
-                description: "How good is the cause-and-effect relationship of events in the story?",
+                description: "How often do the characters' actions have realistic or believable results?",
                 scale: 2.617924
             },
             {
                 title: "Character Motivation",
-                description: "How much do the character motivations make sense for the characters as written and how well do they drive the characters’ actions?",
+                description: "How well are the characters motivated to do what they do?",
                 scale: 1.618
             },
             {
                 title: "Originality or Satisfaction of Adaptation",
-                description: "If the story is an original work, how well does it avoid cliches and stereotypical storylines and characters? If the story is an adaptation, how well does translate the story of the original work to film?",
+                description: "If the story is original, how well does it avoid cliches? If not, how well does it adapt the original work?",
                 scale: 1
             }
         ]
@@ -74,32 +56,32 @@ const fields = [
         subcategories: [
             {
                 title: "Physicality",
-                description: "How well do the performers utilize their bodies and movements to portray their character?",
+                description: "How well do the actors physically portray their character?",
                 scale: 11.0890052
             },
             {
                 title: "Vocals and Linguistics",
-                description: "How good is the performers’ dialogue delivery (including accents)?",
+                description: "How well do the actors deliver their dialogue?",
                 scale: 6.85352607
             },
             {
                 title: "Chemistry",
-                description: "How well do the performers work with each other on-screen?",
+                description: "How well do the actors work with each other on-screen?",
                 scale: 4.23580103
             },
             {
                 title: "Believability",
-                description: "How well do the performances match the expectations for how the characters would behave?",
+                description: "Do the actors portray their characters in a believable way?",
                 scale: 2.617924
             },
             {
                 title: "Range",
-                description: "How well do the performers convey different emotions and levels of feeling?",
+                description: "How well do the performers convey different ranges and levels of emotion?",
                 scale: 1.618
             },
             {
                 title: "Distinction of the Role",
-                description: "How much do the roles differ from past roles that the performers have done?",
+                description: "How much do the roles differ from other performances by the actors?",
                 scale: 1
             }
         ]
@@ -110,37 +92,37 @@ const fields = [
         subcategories: [
             {
                 title: "Cinematography",
-                description: "How original and purposeful is the film’s shot composition?",
+                description: "How much does the film's camera work and overall look add to its story?",
                 scale: 17.9420104
             },
             {
                 title: "Lighting",
-                description: "How well does the film’s lighting contribute to its visuals?",
+                description: "How well is light used to convey emotion or make the movie believable?",
                 scale: 11.0890052
             },
             {
                 title: "Production Design",
-                description: "How well does the film establish and convey its overall aesthetic?",
+                description: "How well does the film establish and convey its overall look?",
                 scale: 6.85352607
             },
             {
                 title: "Quality of Special Effects",
-                description: "How believable do the film’s special visual effects look?",
+                description: "How convincing are the film's special effects?",
                 scale: 4.23580103
             },
             {
                 title: "Appropriateness of Special Effects",
-                description: "How well does the film refrain from using gratuitous, unnecessary, or inconsistent special visual effects?",
+                description: "Does the film use special effects only where necessary and appropriate?",
                 scale: 2.617924
             },
             {
                 title: "Technical Innovation",
-                description: "How much does the film pioneer new cinematic techniques or new special effects technology?",
+                description: "How much does the film use new cinematic or special effects technology?",
                 scale: 1.618
             },
             {
                 title: "Typography",
-                description: "How well do the film’s fonts match the its aesthetic and avoid creating a distraction from the shots upon which they are overlaid?",
+                description: "When there's text on the screen, how well does it match the look and feel of the film?",
                 scale: 1
             }
         ]
@@ -151,27 +133,27 @@ const fields = [
         subcategories: [
             {
                 title: "Score",
-                description: "How well do the film’s original compositions complement or enhance the other aspects of the film?",
+                description: "How well does the original music complement the other aspects of the film?",
                 scale: 6.85352607
             },
             {
                 title: "Soundtrack",
-                description: "How well do the film’s non-original compositions complement or enhance the other aspects of the film?",
+                description: "How well does the film’s non-original music complement or enhance the other aspects of the film?",
                 scale: 4.23580103
             },
             {
                 title: "Mixing",
-                description: "How well does the film’s audio mixing keep each element clearly heard and highlight the most important elements?",
+                description: "How well can important audio elements be heard and understood?",
                 scale: 2.617924
             },
             {
                 title: "Use of sound effects",
-                description: "How well does the film appropriately utilize sound effects?",
+                description: "How well does the film use appropriate sound effects?",
                 scale: 1.618
             },
             {
                 title: "Foley Quality",
-                description: "How good are the film’s Foley sound effects?",
+                description: "How well do the sound effects match the actions they represent?",
                 scale: 1
             }
         ]
@@ -187,17 +169,17 @@ const fields = [
             },
             {
                 title: "Shot consistency/continuity",
-                description: "How well do shots within the same scene maintain consistent visual elements?",
+                description: "How well do shots within a scene maintain their consistency?",
                 scale: 2.617924
             },
             {
                 title: "Coherence",
-                description: "How well does the editing keep the story events clear and help them progress logically?",
+                description: "How logically do the scenes flow from one to the next?",
                 scale: 1.618
             },
             {
                 title: "Efficiency",
-                description: "How well does the film’s editing cut unnecessary content and leave in necessary content?",
+                description: "Does the film do a good job of showing only what's necessary to tell the story?",
                 scale: 1
             }
         ]
