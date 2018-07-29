@@ -10,7 +10,7 @@ const fields = [
             },
             {
                 title: "Dialogue",
-                description: "How well is the dialogue as written?",
+                description: "How well is the dialogue written?",
                 scale: 29.0301728
             },
             {
