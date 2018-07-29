@@ -8,12 +8,11 @@ export class FilmSelectModal extends Component {
         e.preventDefault()
         let input = e.target.value
 
-
         if (input.length > 2) {
             setTimeout(() => {
-                fetch(`/api/films?q=${input}`)
+                fetch(`http://www.omdbapi.com/?s=${input}&type=movie&apikey=5e319b9a`)
                     .then(data => data.json())
-                    .then(data => { this.props.addSuggestions(data) })
+                    .then(data => this.props.addSuggestions(data.Search) )
             }, 1000)
         }
     }
@@ -21,7 +20,7 @@ export class FilmSelectModal extends Component {
     suggestionsList = () => {
         if (this.props.suggestions && Array.isArray(this.props.suggestions)) {
             return this.props.suggestions.map((e) => {
-                return <div data-id={e.id} onClick={this.props.selectFilm} className='film-suggestions__suggestion'>{e.title} <span className='year'>({new Date(e.release_date).getFullYear()})</span></div>
+                return <div data-id={e.imdbID} onClick={this.props.selectFilm} className='film-suggestions__suggestion'>{e.Title} <span className='year'>({e.Year})</span></div>
             })
         } else {
             return null

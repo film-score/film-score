@@ -67,7 +67,7 @@ export class ScoreTable extends Component {
                         return (
                             <tr>
                                 {this.props.type === 'users' ? 
-                                    <td>{v.film_info[0].title}</td> :
+                                    <td>{v.film_title}</td> :
                                     <td>{v.user_id}</td>}
                                 <td>{v.composite_score} / 10</td>
                                 <td>{new Date(v.score_date).toDateString()}</td>

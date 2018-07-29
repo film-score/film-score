@@ -12,10 +12,10 @@ moduleExports.GET_query = (options, req, res, next) => {
     switch (options.table) {
         case 'scores':
             if (!options.by) { return console.err('What are we querying by, dude?') }
-            if (options.by === 'user_id') {
-                sql = `SELECT * FROM ( SELECT *, ( SELECT array_to_json(array_agg(row_to_json(f))) FROM ( SELECT * FROM films WHERE id=scores.film_id ) f ) AS film_info FROM scores WHERE user_id=$1 ) s`;
-                break
-            }
+            // if (options.by === 'user_id') {
+            //     sql = `SELECT * FROM ( SELECT *, ( SELECT array_to_json(array_agg(row_to_json(f))) FROM ( SELECT * FROM films WHERE id=scores.film_id ) f ) AS film_info FROM scores WHERE user_id=$1 ) s`;
+            //     break
+            // }
             sql = `SELECT * FROM scores WHERE ${options.by}=$1`
             break
         case 'films':
@@ -82,11 +82,12 @@ moduleExports.POST_query = (options, req, res, next) => {
             ]       
             break;
         case 'scores':
-            sql = `INSERT INTO scores (id, score_date, film_id, user_id, composite_score, story_score, performance_score, visuals_score, audio_score, construction_score)
-                    VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`
+            sql = `INSERT INTO scores (id, score_date, film_id, film_title, user_id, composite_score, story_score, performance_score, visuals_score, audio_score, construction_score)
+                    VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`
             data = [
                 new Date(),
                 req.body.film_id,
+                req.body.film_title,
                 req.user.id,
                 req.body.composite_score,
                 req.body.story_score,

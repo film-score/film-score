@@ -61,9 +61,10 @@ export class ScoreForm extends Component {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
                 'Content-Type': 'application/json'
             }),
+
             body: JSON.stringify({
-                film_id: this.props.film.id,
-                user_id: 46,
+                film_id: Number(this.props.film.id.replace('tt','')),
+                film_title: this.props.film.title,
                 composite_score: score.composite,
                 story_score: score.categories[0][1],
                 performance_score: score.categories[1][1],

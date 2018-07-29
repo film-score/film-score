@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const DashboardTable = (props) => {
     const tableRows = props.rows.map((row, i) => {
         return <tr>
-            <td>{row.film_info[0].title}</td>
+            <td>{row.film_title}</td>
             {/* <td><a href={"/film/" + row.id} className="text-light">{row.film_info[0].title}</a></td> */}
             <td>{row.composite_score}</td>
             <td>{new Date(row.score_date).toLocaleDateString()}</td>

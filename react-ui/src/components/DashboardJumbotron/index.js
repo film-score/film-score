@@ -51,7 +51,7 @@ const DashboardJumbotron = (props) => {
                 <Container className="px-5">
                     <h1 className="display-4">Welcome back, <strong>{props.currentUser.first_name}</strong>!</h1>
                     <hr />
-                    <p className="lead mb-0">You've scored <strong>{props.currentUser.filmsScored}</strong> films so far! {randomPun()}</p>
+                    <p className="lead mb-0">You've scored <strong>{props.currentUser.filmsScored}</strong> films so far! "{randomPun()}"</p>
                 </Container>
             </Jumbotron>
         </Col>

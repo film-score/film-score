@@ -39,18 +39,18 @@ class NewScore extends React.Component {
         e.preventDefault()
         document.getElementById('filmTitle').value = (e.target.innerText)
         this.setState({ suggestions: [] })
-        fetch(`/api/films/${e.target.dataset.id}`)
+        fetch(`http://www.omdbapi.com/?i=${e.target.dataset.id}&apikey=5e319b9a`)
             .then(data => data.json())
             .then(data => this.setState({
                 film: {
                     ...this.state.film,
                     selected: true,
-                    title: data[0].title,
-                    id: data[0].id,
-                    date: new Date(data[0].release_date).toLocaleDateString("en-US", { month: 'long', day: 'numeric', year: 'numeric' }),
-                    director: data[0].director_name,
-                    excerpt: data[0].short_description,
-                    poster: data[0].poster_file
+                    title: data.Title,
+                    id: data.imdbID,
+                    date: new Date(data.Released).toLocaleDateString("en-US", { month: 'long', day: 'numeric', year: 'numeric' }),
+                    director: data.Director,
+                    excerpt: data.Plot,
+                    poster: data.Poster
                 }
             }))
     }
