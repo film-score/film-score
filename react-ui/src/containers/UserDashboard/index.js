@@ -49,7 +49,7 @@ class UserDashboard extends React.Component {
         let visible = this.state.ready ? "visible" : ""
 
         return (
-            <section id="dashboard" className={"body pt-5 " + visible}>
+            <section id="dashboard" className={"body py-5 " + visible}>
                 {!this.state.noScores ?
                 <Container className="pb-5">
                     <Jumbotron currentUser={{ ...this.props.currentUser, filmsScored: this.state.scores.length }} />

@@ -69,7 +69,7 @@ export class ScoreTable extends Component {
                                 {this.props.type === 'users' ? 
                                     <td>{v.film_title}</td> :
                                     <td>{v.user_id}</td>}
-                                    <td>{v.composite_score.toFixed(2)} / 10</td>
+                                    <td>{Math.round(v.composite_score*100)/100} / 10</td>
                                     <td>{new Date(v.score_date).toDateString()}</td>
                                     <td><button className='btn btn-sm btn-outline-danger' onClick={this.handleDelete.bind(this, v.id, i)}><FontAwesomeIcon icon='trash' /></button></td>
                             </tr>

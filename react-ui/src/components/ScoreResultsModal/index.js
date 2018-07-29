@@ -20,16 +20,16 @@ export class ScoreResultsModal extends Component {
                     <h2 className="display-5 mb-3">{this.props.film.title}</h2>
 
                     <div className="mb-5 text-center">
-                        <span className="display-1">{this.props.results.composite_score.toFixed(2)}</span><small className='display-4 text-dark'>/10</small>
+                        <span className="display-1">{Math.round(this.props.results.composite_score*100)/100}</span><small className='display-4 text-dark'>/10</small>
                         <div className="small text-uppercase font-weight-bold">Composite Score</div>
                     </div>
 
                     <Table dark size="md">
-                        <tr><th>Story</th><td>{this.props.results.story_score.toFixed(2)}</td></tr>
-                        <tr><th>Performance</th><td>{this.props.results.performance_score.toFixed(2)}</td></tr>
-                        <tr><th>Visuals</th><td>{this.props.results.visuals_score.toFixed(2)}</td></tr>
-                        <tr><th>Audio</th><td>{this.props.results.audio_score.toFixed(2)}</td></tr>
-                        <tr><th>Construction</th><td>{this.props.results.construction_score.toFixed(2)}</td></tr>
+                        <tr><th>Story</th><td>{Math.round(this.props.results.story_score*100)/100}</td></tr>
+                        <tr><th>Performance</th><td>{Math.round(this.props.results.performance_score*100)/100}</td></tr>
+                        <tr><th>Visuals</th><td>{Math.round(this.props.results.visuals_score*100)/100}</td></tr>
+                        <tr><th>Audio</th><td>{Math.round(this.props.results.audio_score*100)/100}</td></tr>
+                        <tr><th>Construction</th><td>{Math.round(this.props.results.construction_score*100)/100}</td></tr>
                     </Table>
                 </ModalBody>
                 <ModalFooter className="border-dark">
