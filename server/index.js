@@ -27,7 +27,7 @@ passport.use(new LocalStrategy({
         usernameField: 'email'
     },
     (username, password, cb) => {
-        db.query('SELECT id, email, password, account_type FROM users WHERE email=$1', [username], (err, result) => {
+        db.query('SELECT id, email, password, account_type FROM users WHERE LOWER(email)=LOWER($1)', [username], (err, result) => {
             if (err) {
                 console.error('Error when selecting user on login', err)
                 return cb(err)
