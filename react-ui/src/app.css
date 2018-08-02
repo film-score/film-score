@@ -14,6 +14,8 @@ main {
 
 section.body {
     opacity: 0;
+    -webkit-transition: .2s all linear;
+    -o-transition: .2s all linear;
     transition: .2s all linear;
     overflow-y: scroll;
     height: 100vh;
@@ -61,14 +63,21 @@ section.body.visible {
     left: 0;
     right: 0;
     bottom: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 #loading > img {
     max-width: 250px;
-    animation: bounce 3s ease-in-out infinite;
+    -webkit-animation: bounce 3s ease-in-out infinite;
+            animation: bounce 3s ease-in-out infinite;
 }
 
 .form-page {
@@ -85,8 +94,12 @@ section.body.visible {
 
 .loader {
     width: 100px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .loader-bar {
@@ -96,11 +109,12 @@ section.body.visible {
     width: 15px;
     margin: 0 .15em;
     border-radius: 50%;
-    animation: loader 2s infinite ease-in-out;
+    -webkit-animation: loader 2s infinite ease-in-out;
+            animation: loader 2s infinite ease-in-out;
 }
 
-.loader-bar:nth-child(2) { animation-delay: .25s }
-.loader-bar:nth-child(3) { animation-delay: .5s }
+.loader-bar:nth-child(2) { -webkit-animation-delay: .25s; animation-delay: .25s }
+.loader-bar:nth-child(3) { -webkit-animation-delay: .5s; animation-delay: .5s }
 
 @-webkit-keyframes loader {
     0% {
