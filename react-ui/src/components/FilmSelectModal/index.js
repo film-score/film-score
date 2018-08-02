@@ -10,7 +10,7 @@ export class FilmSelectModal extends Component {
 
         if (input.length > 2) {
             setTimeout(() => {
-                fetch(`http://www.omdbapi.com/?s=${input}&type=movie&apikey=5e319b9a`)
+                fetch(`https://www.omdbapi.com/?s=${input}&type=movie&apikey=5e319b9a`)
                     .then(data => data.json())
                     .then(data => this.props.addSuggestions(data.Search) )
             }, 1000)

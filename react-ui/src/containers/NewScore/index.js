@@ -39,7 +39,7 @@ class NewScore extends React.Component {
         e.preventDefault()
         document.getElementById('filmTitle').value = (e.target.innerText)
         this.setState({ suggestions: [] })
-        fetch(`http://www.omdbapi.com/?i=${e.target.dataset.id}&apikey=5e319b9a`)
+        fetch(`https://www.omdbapi.com/?i=${e.target.dataset.id}&apikey=5e319b9a`)
             .then(data => data.json())
             .then(data => this.setState({
                 film: {
