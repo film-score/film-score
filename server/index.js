@@ -8,7 +8,6 @@ const LocalStrategy = require('passport-local').Strategy
 const db = require('./db')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const sslRedirect = require('heroku-ssl-redirect')
 
 const JWTStrategy = require('passport-jwt').Strategy
 const ExtractJWT = require('passport-jwt').ExtractJwt
@@ -93,7 +92,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(express.static(path.join(__dirname, '../react-ui/build')))
-app.use(sslRedirect())
 
 router.router(app)
 
